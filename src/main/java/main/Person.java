@@ -2,8 +2,7 @@ package main;
 
 import java.math.BigDecimal;
 
-public class Person
-{
+public class Person {
     private String name;
     private BigDecimal wallet;
     private BigDecimal appendFromBank;

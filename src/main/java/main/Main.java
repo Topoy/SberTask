@@ -3,10 +3,10 @@ package main;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+
 import java.util.ArrayList;
 
-public class Main
-{
+public class Main {
     public static void main(String[] args) {
 
         Bank sberBank = new Bank();

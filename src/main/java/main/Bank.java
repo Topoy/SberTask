@@ -9,19 +9,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Bank
-{
+public class Bank {
     private BigDecimal wallet;
     private final ArrayList<Person> persons = new ArrayList<>();
     private final ArrayList<BigDecimal> initialPersonWallets = new ArrayList<>();
     private final ArrayList<String> minimalAppends = new ArrayList<>();
 
 
-    public BigDecimal getWallet() { return wallet; }
+    public BigDecimal getWallet() {
+        return wallet;
+    }
 
-    public void setWallet(BigDecimal wallet) { this.wallet = wallet; }
+    public void setWallet(BigDecimal wallet) {
+        this.wallet = wallet;
+    }
 
-    public ArrayList<Person> getPersons() { return persons; }
+    public ArrayList<Person> getPersons() {
+        return persons;
+    }
 
     public void setPersons(NodeList nodeList) {
         for (int i = 0; i < nodeList.getLength(); i++) {
@@ -44,7 +49,7 @@ public class Bank
 
         BigDecimal reminderFraction = BigDecimal.valueOf(0.01);
         for (Person person : persons) {
-           if (reminder.doubleValue() != 0) {
+            if (reminder.doubleValue() != 0) {
                 person.setWallet(fraction.add(reminderFraction));
                 reminder = reminder.subtract(reminderFraction);
                 continue;
@@ -74,13 +79,10 @@ public class Bank
     }
 
 
-
-
     private void setAppendFromBankForClients(ArrayList<Person> persons, ArrayList<BigDecimal> initialPersonWallets) {
         BigDecimal append = new BigDecimal(0);
         int count = 0;
-        for (Person person : persons)
-        {
+        for (Person person : persons) {
             append = person.getWallet().subtract(initialPersonWallets.get(count));
             person.setAppendFromBank(append);
             count++;

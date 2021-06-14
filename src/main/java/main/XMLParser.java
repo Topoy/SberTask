@@ -17,8 +17,7 @@ import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class XMLParser
-{
+public class XMLParser {
     public static Document buildXMLDocument(String path) {
         File xmlFile = new File(path);
         DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
@@ -71,8 +70,6 @@ public class XMLParser
             }
 
 
-
-
             StreamResult file = new StreamResult(new File("src/main/resources/result.xml"));
             DOMSource source = new DOMSource(doc);
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
@@ -80,8 +77,7 @@ public class XMLParser
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
             //transformer.setOutputProperty(OutputKeys.);
             transformer.transform(source, file);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
