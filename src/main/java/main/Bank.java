@@ -2,7 +2,6 @@ package main;
 
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -40,22 +39,25 @@ public class Bank {
         }
     }
 
-    public void divideBankWallet(BigDecimal bankWallet, ArrayList<Person> persons) {
+    public void divideBankWallet(BigDecimal bankWallet, ArrayList<Person> persons) throws Exception {
+        if (!walletIsPositive(bankWallet, persons)) {
+            throw new Exception("Wallet is negative");
+        }
         int personsCount = persons.size();
         BigDecimal totalAmount = getPersonsTotalWallet(persons).add(bankWallet);
         BigDecimal fraction = totalAmount.divide(BigDecimal.valueOf(personsCount), RoundingMode.DOWN);
-        BigDecimal preliminaryTotalAmount = fraction.multiply(BigDecimal.valueOf(personsCount));
+
+        ArrayList<Person> poorPersons = createPoorPersons(fraction, persons);
+        int poorPersonsCount = poorPersons.size();
+        if (poorPersons.size() != persons.size()) {
+            totalAmount = getPersonsTotalWallet(poorPersons).add(bankWallet);
+            fraction = totalAmount.divide(BigDecimal.valueOf(poorPersonsCount), RoundingMode.DOWN);
+        }
+
+        BigDecimal preliminaryTotalAmount = fraction.multiply(BigDecimal.valueOf(poorPersonsCount));
         BigDecimal reminder = totalAmount.subtract(preliminaryTotalAmount);
 
-        BigDecimal reminderFraction = BigDecimal.valueOf(0.01);
-        for (Person person : persons) {
-            if (reminder.doubleValue() != 0) {
-                person.setWallet(fraction.add(reminderFraction));
-                reminder = reminder.subtract(reminderFraction);
-                continue;
-            }
-            person.setWallet(fraction);
-        }
+        distributeMoney(reminder, fraction, poorPersons);
         setAppendFromBankForClients(persons, initialPersonWallets);
         System.out.println("Общая сумма: " + totalAmount + "; На одного: " + fraction +
                 "; На всех: " + preliminaryTotalAmount + "; Остаток: " + reminder);
@@ -80,7 +82,7 @@ public class Bank {
 
 
     private void setAppendFromBankForClients(ArrayList<Person> persons, ArrayList<BigDecimal> initialPersonWallets) {
-        BigDecimal append = new BigDecimal(0);
+        BigDecimal append;
         int count = 0;
         for (Person person : persons) {
             append = person.getWallet().subtract(initialPersonWallets.get(count));
@@ -95,5 +97,40 @@ public class Bank {
             amount = amount.add(person.getWallet());
         }
         return amount;
+    }
+
+    private boolean walletIsPositive(BigDecimal bankWallet, ArrayList<Person> persons) {
+        if (bankWallet.compareTo(BigDecimal.ZERO) < 0) {
+            return false;
+        } else {
+            for (Person person : persons) {
+                if (person.getWallet().compareTo(BigDecimal.ZERO) < 0) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private ArrayList<Person> createPoorPersons(BigDecimal fraction, ArrayList<Person> persons) {
+        ArrayList<Person> poorPersons = new ArrayList<>();
+        for (Person person : persons) {
+            if (person.getWallet().compareTo(fraction) <= 0) {
+                poorPersons.add(person);
+            }
+        }
+        return poorPersons;
+    }
+
+    private void distributeMoney(BigDecimal moneyReminder, BigDecimal fraction, ArrayList<Person> persons) {
+        BigDecimal reminderFraction = BigDecimal.valueOf(0.01);
+        for (Person person : persons) {
+            if (moneyReminder.doubleValue() != 0) {
+                person.setWallet(fraction.add(reminderFraction));
+                moneyReminder = moneyReminder.subtract(reminderFraction);
+                continue;
+            }
+            person.setWallet(fraction);
+        }
     }
 }

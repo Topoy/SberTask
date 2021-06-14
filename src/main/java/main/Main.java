@@ -22,10 +22,11 @@ public class Main {
         ArrayList<Person> bankClients = sberBank.getPersons();
 
         //распределили деньги по-ровну
-        sberBank.divideBankWallet(sberBank.getWallet(), bankClients);
-        for (Person person : bankClients) {
-            System.out.println("Имя: " + person.getName() + "; Счет: " + person.getWallet() +
-                    "; Получено от банка: " + person.getAppendFromBank());
+        try {
+            sberBank.divideBankWallet(sberBank.getWallet(), bankClients);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return;
         }
 
         //определили 3 клиентов с минимальным доходом от банка
