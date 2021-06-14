@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<total>
+    <result>
+        <Person appendFromBank="458.51" name="Михаил" wallet="459.85"/>
+        <Person appendFromBank="457.73" name="Татьяна" wallet="459.85"/>
+        <Person appendFromBank="456.41" name="Игорь" wallet="459.85"/>
+        <Person appendFromBank="454.70" name="Александр" wallet="459.85"/>
+        <Person appendFromBank="457.74" name="Георг" wallet="459.85"/>
+        <Person appendFromBank="458.42" name="Оля" wallet="459.85"/>
+        <Person appendFromBank="455.59" name="Светлана" wallet="459.84"/>
+    </result>
+    <minimal>
+        <Person name="Михаил"/>
+        <Person name="Татьяна"/>
+        <Person name="Игорь"/>
+    </minimal>
+</total>
