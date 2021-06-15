@@ -27,16 +27,9 @@ public class Bank {
         return persons;
     }
 
-    public void setPersons(NodeList nodeList) {
-        for (int i = 0; i < nodeList.getLength(); i++) {
-            if (nodeList.item(i).getNodeType() != Node.ELEMENT_NODE) {
-                continue;
-            }
-            String bankClientName = XMLParser.getAttributeByName(nodeList.item(i), "name");
-            String bankClientWalletValue = XMLParser.getAttributeByName(nodeList.item(i), "wallet");
-            this.persons.add(new Person(bankClientName, new BigDecimal(bankClientWalletValue)));
-            initialPersonWallets.add(new BigDecimal(bankClientWalletValue));
-        }
+    public void setOnePerson(String personName, String wallet) {
+        this.persons.add(new Person(personName, new BigDecimal(wallet)));
+        initialPersonWallets.add(new BigDecimal(wallet));
     }
 
     public void divideBankWallet(BigDecimal bankWallet, ArrayList<Person> persons) throws Exception {

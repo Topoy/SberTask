@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <total>
     <result>
-        <Person appendFromBank="0.01" name="Михаил" wallet="536.27"/>
+        <Person appendFromBank="0" name="Михаил" wallet="1000"/>
         <Person appendFromBank="534.15" name="Татьяна" wallet="536.27"/>
         <Person appendFromBank="532.83" name="Игорь" wallet="536.27"/>
         <Person appendFromBank="531.12" name="Александр" wallet="536.27"/>
-        <Person appendFromBank="534.15" name="Георг" wallet="536.26"/>
+        <Person appendFromBank="534.16" name="Георг" wallet="536.27"/>
         <Person appendFromBank="534.83" name="Оля" wallet="536.26"/>
         <Person appendFromBank="532.01" name="Светлана" wallet="536.26"/>
     </result>

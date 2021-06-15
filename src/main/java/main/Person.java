@@ -43,4 +43,15 @@ public class Person {
                 ", wallet=" + wallet +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || o.getClass() != this.getClass()) {
+            return false;
+        }
+        Person guest = (Person) o;
+        return this.name.equals(guest.name) && this.wallet.equals(guest.wallet);
+    }
+
+
 }

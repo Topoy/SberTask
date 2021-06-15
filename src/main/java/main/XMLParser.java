@@ -3,6 +3,7 @@ package main;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -38,7 +39,7 @@ public class XMLParser {
         return node.getAttributes().getNamedItem(name).getTextContent();
     }
 
-    public static void createXML(ArrayList<Person> persons, ArrayList<String> minimalAppends) {
+    public static void createXML(ArrayList<Person> persons, ArrayList<String> minimalAppends, String path) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder;
         try {
@@ -68,17 +69,26 @@ public class XMLParser {
             }
 
 
-            StreamResult file = new StreamResult(new File("src/main/resources/result.xml"));
+            StreamResult file = new StreamResult(new File(path));
             DOMSource source = new DOMSource(doc);
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-            //transformer.setOutputProperty(OutputKeys.);
             transformer.transform(source, file);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public static void personsParsing(Bank bank, NodeList nodeList) {
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            if (nodeList.item(i).getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            String personName = XMLParser.getAttributeByName(nodeList.item(i), "name");
+            String personWallet = XMLParser.getAttributeByName(nodeList.item(i), "wallet");
+            bank.setOnePerson(personName, personWallet);
+        }
     }
 
 }
